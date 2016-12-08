@@ -5,7 +5,7 @@ from charmhelpers.core.hookenv import (
 
 from charms.reactive import (
     when,
-    remove_flag,
+    remove_state as remove_flag,
 )
 import charms.sshproxy
 
