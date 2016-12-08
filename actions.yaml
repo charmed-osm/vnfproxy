@@ -1,0 +1,8 @@
+start:
+  description: "Stop the service"
+stop:
+  description: "Stop the service"
+restart:
+  description: "Stop the service"
+reboot:
+  description: "Reboot the machine"
