@@ -10,61 +10,66 @@ from charms.reactive import (
 import charms.sshproxy
 
 
-@when('actions.start')
-def start():
-    err = ''
-    try:
-        # Enter the command to start your service(s)
-        cmd = "service myname start"
-        result, err = charms.sshproxy._run(cmd)
-    except:
-        action_fail('command failed:' + err)
-    else:
-        action_set({'outout': result})
-    finally:
-        remove_flag('actions.start')
-
-
-@when('actions.stop')
-def stop():
-    err = ''
-    try:
-        # Enter the command to stop your service(s)
-        cmd = "service myname stop"
-        result, err = charms.sshproxy._run(cmd)
-    except:
-        action_fail('command failed:' + err)
-    else:
-        action_set({'outout': result})
-    finally:
-        remove_flag('actions.stop')
-
-
-@when('actions.restart')
-def restart():
-    err = ''
-    try:
-        # Enter the command to restart your service(s)
-        cmd = "service myname restart"
-        result, err = charms.sshproxy._run(cmd)
-    except:
-        action_fail('command failed:' + err)
-    else:
-        action_set({'outout': result})
-    finally:
-        remove_flag('actions.restart')
-
-
 @when('actions.reboot')
 def reboot():
     err = ''
     try:
-        # Enter the command to reboot the machine
-        cmd = "reboot"
-        result, err = charms.sshproxy._run(cmd)
+        result, err = charms.sshproxy._run("reboot")
     except:
         action_fail('command failed:' + err)
     else:
         action_set({'outout': result})
     finally:
         remove_flag('actions.reboot')
+
+
+###############################################################################
+# Below is an example implementation of the start/stop/restart actions.       #
+# To use this, copy the below code into your layer and add the appropriate    #
+# command(s) necessary to perform the action.                                 #
+###############################################################################
+
+# @when('actions.start')
+# def start():
+#     err = ''
+#     try:
+#         cmd = "service myname start"
+#         result, err = charms.sshproxy._run(cmd)
+#     except:
+#         action_fail('command failed:' + err)
+#     else:
+#         action_set({'outout': result})
+#     finally:
+#         remove_flag('actions.start')
+#
+#
+# @when('actions.stop')
+# def stop():
+#     err = ''
+#     try:
+#         # Enter the command to stop your service(s)
+#         cmd = "service myname stop"
+#         result, err = charms.sshproxy._run(cmd)
+#     except:
+#         action_fail('command failed:' + err)
+#     else:
+#         action_set({'outout': result})
+#     finally:
+#         remove_flag('actions.stop')
+#
+#
+# @when('actions.restart')
+# def restart():
+#     err = ''
+#     try:
+#         # Enter the command to restart your service(s)
+#         cmd = "service myname restart"
+#         result, err = charms.sshproxy._run(cmd)
+#     except:
+#         action_fail('command failed:' + err)
+#     else:
+#         action_set({'outout': result})
+#     finally:
+#         remove_flag('actions.restart')
+#
+#
