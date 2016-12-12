@@ -41,7 +41,8 @@ actions
 └── stop
 ```
 
-Some actions, such as `run` and `reboot`, do not require any additional configuration. `start`, `stop` and `restart`, however, will require you to specify the command(s) required to interact with your service.
+Some actions, such as `run` and `reboot`, do not require any additional configuration. `start`, `stop` and `restart`, however, will require you to
+implement the command(s) required to interact with your service.
 
 ## Usage
 
@@ -77,13 +78,95 @@ tags:
 subordinate: false
 ```
 
+Implement the default action(s) you wish to support by adding the following code to reactive/pingpong.py and fill in the cmd to be run:
+
+```python
+@when('actions.start')
+def start():
+    err = ''
+    try:
+        cmd = ""
+        result, err = charms.sshproxy._run(cmd)
+    except:
+        action_fail('command failed:' + err)
+    else:
+        action_set({'outout': result})
+    finally:
+        remove_flag('actions.start')
+
+
+@when('actions.stop')
+def stop():
+    err = ''
+    try:
+        # Enter the command to stop your service(s)
+        cmd = "service myname stop"
+        result, err = charms.sshproxy._run(cmd)
+    except:
+        action_fail('command failed:' + err)
+    else:
+        action_set({'outout': result})
+    finally:
+        remove_flag('actions.stop')
+
+
+@when('actions.restart')
+def restart():
+    err = ''
+    try:
+        # Enter the command to restart your service(s)
+        cmd = "service myname restart"
+        result, err = charms.sshproxy._run(cmd)
+    except:
+        action_fail('command failed:' + err)
+    else:
+        action_set({'outout': result})
+    finally:
+        remove_flag('actions.restart')
+```
+
 Rename `README.ex` to `README.md` and describe your application and its usage.
 
 -- fix this. there are cases where the config is useful -- Delete `config.yaml`, since the charm's configuration will be driven by the SO.
 
-Create the `actions.yaml` file; this will describe the operations you would like to perform on or against your service.
+Create the `actions.yaml` file; this will describe the additional operations you would like to perform on or against your service.
 
 ```yaml
+set-server:
+    description: "Set the target IP address and port"
+    params:
+        server-ip:
+            description: "IP on which the target service is listening."
+            type: string
+            default: ""
+        server-port:
+            description: "Port on which the target service is listening."
+            type: integer
+            default: 5555
+    required:
+        - server-ip
+set-rate:
+    description: "Set the rate of packet generation."
+    params:
+        rate:
+            description: "Packet rate."
+            type: integer
+            default: 5
+get-stats:
+    description: "Get the stats."
+get-state:
+    description: "Get the admin state of the target service."
+get-rate:
+    description: "Get the rate set on the target service."
+get-server:
+    description: "Get the target server and IP set"
+```
+
+
+Once you've implemented your actions, you need to compile the various charm layers:
+```bash
+$ charm build
 
 ```
+
 ## Contact
