@@ -204,15 +204,15 @@ def restart():
     """
       err = ''
       try:
-          # Enter the command to restart your service(s)
-          cmd = "service myname restart"
+          # Enter the command (s) to upgrade your VNF software
+          cmd = ""
           result, err = charms.sshproxy._run(cmd)
       except:
           action_fail('command failed:' + err)
       else:
           action_set({'output': result})
       finally:
-          remove_flag('actions.restart')        
+          remove_flag('actions.upgrade')        
 ```
 
 Rename `README.ex` to `README.md` and describe your application and its usage.
