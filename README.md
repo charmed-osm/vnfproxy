@@ -1,8 +1,12 @@
 # vnfproxy
 
+A [Juju](https://jujucharms.com/) charm layer. See [how it works](https://jujucharms.com/how-it-works) and the [Getting Started](https://jujucharms.com/docs/stable/developer-getting-started) page for more information about Juju and Charms.
+
+[OSM](https://osm.etsi.org/) is an [ETSI](http://www.etsi.org/)-hosted project to develop an Open Source NFV Management and Orchestration (MANO) software stack aligned with ETSI NFV.
+
 ## Overview
 
-The vnfproxy layer is intended for use by vendors who wish to integrate a VNF with OSM. The current release of OSM only supports a lightweight version of Juju charms, which we will refer to as "proxy charms".
+The vnfproxy [layer](https://jujucharms.com/docs/stable/developer-layers) is intended for use by vendors who wish to integrate a VNF with OSM. The current release of OSM only supports a lightweight version of Juju charms, which we refer to as VNF Configuration or "proxy" charms.
 
 This document will describe the steps necessary to create a charm for your VNF.
 
@@ -227,7 +231,7 @@ Juju supports the polling of metrics. To do this, create the `metrics.yaml` file
 
 ```yaml
 metrics:
-    mymetric:
+    uptime:
         type: gauge
         description: "Seconds since the machine was rebooted."
         command: awk '{print $1}' /proc/uptime
@@ -241,9 +245,23 @@ Once you've implemented your actions, you need to compile the various charm laye
 $ charm build
 ```
 
-This will combine all of the layers required by your VNF layer into a single charm, in the builds/ directory. Copy that charm into your VNF descriptor package.
+This will combine all of the layers required by your VNF layer into a single charm, in the builds/ directory.
 
+### VNF Descriptor Package
+Copy the combined charm into the `charm` directory of your [VNF package]:
 
-### Checklist
+```
+├── charm
+│   └── myvnf
+├── cloud_init
+│   └── myvnf_cloud_init.cfg
+├── icons
+│   └── myvnf_logo.png
+└── myvnf_vnfd.yaml
+```
 
 ## Contact
+
+Send an email to the OSM_TECH@list.etsi.org mailing list.
+
+[VNF package]: https://osm.etsi.org/wikipub/index.php/Creating_your_own_VNF_package_(Release_TWO)
