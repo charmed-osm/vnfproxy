@@ -72,4 +72,18 @@ def reboot():
 #     finally:
 #         remove_flag('actions.restart')
 #
+# 
+# @when('actions.upgrade')
+# def upgrade_vnf():
+#     err = ''
+#     try:
+#         # Add the command(s) to perform a VNF software upgrade
+#         cmd = ''
+#         result, err = charms.sshproxy._run(cmd)
+#     except:
+#         action_fail('command failed:' + err)
+#     else:
+#         action_set({'outout': result})
+#     finally:
+#         remove_flag('actions.upgrade')
 #
