@@ -10,6 +10,7 @@ normal reactive event, nor can it access things like config.
 """
 
 import os
+import shlex
 from subprocess import check_call, CalledProcessError
 import sys
 import yaml
@@ -31,9 +32,17 @@ def build_command(doc):
         cmd = mdoc.get("command")
         if cmd:
             try:
-                value, err = charms.sshproxy._run(cmd)
-            except CalledProcessError:
+                value, err = charms.sshproxy._run(
+                    # The command may contain quotes that need to be preserved,
+                    # i.e., `awk '{print $1}' /proc/uptime`
+                    shlex.split(cmd, posix=False)
+                )
+            except Exception as e:
+                # Ignore all errors
+                with open("metrics.log", "a") as f:
+                    f.write("{}".format(e))
                 continue
+
             value = value.strip()
             if value:
                 values[metric] = value
