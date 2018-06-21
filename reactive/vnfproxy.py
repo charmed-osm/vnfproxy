@@ -5,7 +5,7 @@ from charmhelpers.core.hookenv import (
 
 from charms.reactive import (
     when,
-    remove_state as remove_flag,
+    clear_flag,
 )
 import charms.sshproxy
 
@@ -20,7 +20,7 @@ def reboot():
     else:
         action_set({'outout': result})
     finally:
-        remove_flag('actions.reboot')
+        clear_flag('actions.reboot')
 
 
 ###############################################################################
@@ -40,7 +40,7 @@ def reboot():
 #     else:
 #         action_set({'outout': result})
 #     finally:
-#         remove_flag('actions.start')
+#         clear_flag('actions.start')
 #
 #
 # @when('actions.stop')
@@ -55,7 +55,7 @@ def reboot():
 #     else:
 #         action_set({'outout': result})
 #     finally:
-#         remove_flag('actions.stop')
+#         clear_flag('actions.stop')
 #
 #
 # @when('actions.restart')
@@ -70,9 +70,9 @@ def reboot():
 #     else:
 #         action_set({'outout': result})
 #     finally:
-#         remove_flag('actions.restart')
+#         clear_flag('actions.restart')
 #
-# 
+#
 # @when('actions.upgrade')
 # def upgrade_vnf():
 #     err = ''
@@ -85,5 +85,5 @@ def reboot():
 #     else:
 #         action_set({'outout': result})
 #     finally:
-#         remove_flag('actions.upgrade')
+#         clear_flag('actions.upgrade')
 #
