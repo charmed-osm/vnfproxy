@@ -43,6 +43,9 @@ def build_command(doc):
                     f.write("{}".format(e))
                 continue
 
+            if isinstance(value, bytes):
+                value = value.decode('utf-8')
+
             value = value.strip()
             if value:
                 values[metric] = value

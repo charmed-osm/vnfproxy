@@ -76,7 +76,6 @@ maintainer: Adam Israel <adam.israel@canonical.com>
 description: |
   A longer description of your VNF and what it provides to users.
 series:
-  - trusty
   - xenial
 tags:
   - osm
@@ -227,7 +226,7 @@ Charms support immutable configuration, defined by the `config.yaml` file. In th
 
 ### Metrics
 
-Juju supports the polling of metrics. To do this, create the `metrics.yaml` file in the root directory of your charm, following the example below. The command specified will be executed inside your VNF; it should return a positive decimal number. The collected metrics will be made available to OSM, beginning with Release 3.
+Juju supports the polling of metrics. To do this, create the `metrics.yaml` file in the root directory of your charm, following the example below. The command specified will be executed inside your VNF; it should return a positive decimal number. The collected metrics will be made available to OSM, beginning with Release 4.
 
 ```yaml
 metrics:
@@ -238,6 +237,8 @@ metrics:
 
 ```
 
+These metrics are collected automatically by way of the `collect-metrics` hook, are stored in the Juju Controller, and will be periodically polled by the OSM MON module.
+
 ### Building your VNF charm
 
 Once you've implemented your actions, you need to compile the various charm layers. From the charm's root directory:
@@ -245,7 +246,7 @@ Once you've implemented your actions, you need to compile the various charm laye
 $ charm build
 ```
 
-This will combine all of the layers required by your VNF layer into a single charm, in the builds/ directory.
+This will combine all of the layers required by your VNF layer into a single charm, in the builds/ directory. At this point, the charm can be delivered to a Network Operator for onboarding.
 
 ### VNF Descriptor Package
 Copy the combined charm into the `charm` directory of your [VNF package]:
